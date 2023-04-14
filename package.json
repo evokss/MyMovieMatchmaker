@@ -1,11 +1,11 @@
 {
-    "name": "your-app-name",
+    "name": "MovieMatchmaker",
     "version": "1.0.0",
-    "description": "Your app description",
+    "description": "Web-app for movie recommendations.",
     "main": "server.js",
     "scripts": {
       "start": "node server.js"
     },
-    "author": "Your Name",
+    "author": "Eva Koss",
     "license": "ISC"
   }

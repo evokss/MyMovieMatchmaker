@@ -4,8 +4,11 @@
     "description": "Web-app for movie recommendations.",
     "main": "server.js",
     "scripts": {
-      "start": "node server.js"
+        "start": "node server.js"
     },
     "author": "Eva Koss",
-    "license": "ISC"
-  }
+    "license": "ISC",
+    "dependencies": {
+        "mongodb": "^5.2.0"
+    }
+}

@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const Director = require('../models/director')
-const director = require('../models/director')
 
-//All Director Route
+//All Directors Route
 router.get('/', async (req, res) => {
     let searchOptions = {}
     if (req.query.name != null && req.query.name !== '') {
@@ -26,23 +25,38 @@ router.get('/new', (req, res) => {
 })
 
 //Create Director Route
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const director = new Director({
-        name: req.body.name
+        name: res.body.name
     })
+    try{
+        const newDirector = await director.save()
+        //res.redirect(`directors/${newDirector.id}`)
+        res.redirect('directors')
+    } catch{
+      res.render('directors/new', {
+        director: director,
+        errorMessage: 'Error creating Director'
+      })
+    }
+})
+// router.post('/', (req, res) => {
+//     const director = new Director({
+//         name: req.body.name
+//     })
 
-    director.save()
-        .then(responce => {
-            //res.redirect(`directors/${newDirector.id}`)
-            res.redirect('directors')
-        })
-        .catch(error => {
-            res.render('directors/new',{
-                director: director,
-                errorMessage: 'Error creating Director'
-            })
-})
-})
+//     director.save()
+//         .then(responce => {
+//             //res.redirect(`directors/${newDirector.id}`)
+//             res.redirect('directors')
+//         })
+//         .catch(error => {
+//             res.render('directors/new',{
+//                 director: director,
+//                 errorMessage: 'Error creating Director'
+//             })
+// })
+// })
     
 
 module.exports = router

@@ -1,0 +1,26 @@
+<h2>Search Movie Reviews</h2>
+<form action="/movies" method="GET">
+  <div>
+    <label>Review Title</label>
+    <input
+      type="text"
+      name="reviewTitle"
+      value="<%= searchOptions.reviewTitle %>"
+    />
+  </div>
+
+  <div>
+    <label>Movie Title</label>
+    <input
+      type="text"
+      name="movieTitle"
+      value="<%= searchOptions.movieTitle %>"
+    />
+  </div>
+
+  <button type="submit">Search</button>
+</form>
+
+<% movies.forEach(movie => { %>
+<img height="150" width="100" src="<%= movie.posterImagePath %>" />
+<% }) %>

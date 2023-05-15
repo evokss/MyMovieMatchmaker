@@ -6,8 +6,12 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 
 //All Movies Route
 router.get('/', async (req, res) => {
+    let query = Movie.find()
+    if (req.query.movieTitle != null && req.query.movieTitle != '') {
+        query = query.regex('movieTitle', new RegExp(req.query.movieTitle, 'i'))
+    }
     try{
-        const movies = await movie.find({})
+        const movies = await query.exec()
         res.render('movies/index', {
             movies: movies,
             searchOptions: req.query
@@ -41,6 +45,15 @@ router.post('/', async (req, res) => {
     }
 
 })
+
+// router.get(':/id', async (req, res) => {
+//     try{
+//         const movie = await Movie.findById(req.params.id).populate('director').exec()
+//         res.render('movie/show', {movie: movie})
+//     } catch {
+//         res.redirect('movies')
+//     }
+// })
 
     async function renderNewPage(res, movie, hasError = false) {
         try {

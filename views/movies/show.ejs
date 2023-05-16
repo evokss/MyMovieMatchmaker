@@ -1,1 +1,9 @@
-<!-- <h2><%= movie.movieTitle %></h2> -->
+<h2><%= movie.movieTitle %></h2>
+<div>Review Title: <%= movie.reviewTitle %></div>
+<img width="100" height="150" src="<%= movie.posterImagePath %>" />
+<div>Director: <%= movie.director.name %></div>
+<div>Thoughts: <%= movie.description %></div>
+
+<a href="/movies/<%= movie.id %>/edit">Edit</a>
+<%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %>
+<a href="/directors/<%= movie.director.id %>">View Autor</a>

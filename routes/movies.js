@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Movie = require('../models/movie')
 const Director = require('../models/director')
+const movie = require('../models/movie')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 
 //All Movies Route
@@ -38,36 +39,104 @@ router.post('/', async (req, res) => {
 
     try{
         const newMovie = await movie.save()
-        //res.redirect(`directors/${newDirector.id}`)
-        res.redirect('movies')
+        res.redirect(`movies/${newMovie.id}`)
     } catch{
         renderNewPage(res, movie, true)
     }
 
 })
 
-// router.get(':/id', async (req, res) => {
-//     try{
-//         const movie = await Movie.findById(req.params.id).populate('director').exec()
-//         res.render('movie/show', {movie: movie})
-//     } catch {
-//         res.redirect('movies')
-//     }
-// })
-
-    async function renderNewPage(res, movie, hasError = false) {
-        try {
-            const directors = await Director.find({})
-            const params = {
-                directors: directors,
-                movie: movie
-            }
-            if (hasError) params.errorMessage = 'Error Creating Movie Review!'
-            res.render('movies/new', params)
-          } catch{
-              res.redirect('/movies')
-          }
+// Show Book Route
+router.get('/:id', async (req, res) => {
+    try{
+        const movie = await Movie.findById(req.params.id).populate('director').exec()
+        res.render('movies/show', {movie: movie})
+    } catch {
+        res.redirect('/')
     }
+})
+
+// Edit Movie Route
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const movie = await Movie.findById(req.params.id)
+        renderEditPage(res, movie)
+    } catch {
+        res.redirect('/')
+    }
+})
+
+// Update Movie Route
+router.put('/:id', async (req, res) => {
+    let movie
+
+    try{
+        movie = await Movie.findById(req.params.id)
+        movie.movieTitle = req.body.movieTitle
+        movie.reviewTitle = req.body.reviewTitle
+        movie.director = req.body.director
+        movie.description = req.body.description
+        if (req.body.poster != null && req.body.poster !== '') {
+            savePoster(movie, req.body.poster)
+        }
+        await movie.save()
+        res.redirect(`/movies/${movie.id}`)
+    } catch{
+        if (movie != null) {
+            renderEditPage(res, movie, true)
+        } else {
+            redirect('/')
+        }
+        renderNewPage(res, movie, true)
+    }
+})
+
+//Delete Movie Router
+router.delete('/:id', async (req, res) => {
+    try {
+        await Movie.findByIdAndDelete(req.params.id)
+        res.redirect('/movies')
+    } catch {
+        if (movie != null) {
+          res.render('movies/show', {
+            movie: movie,
+            errorMessage: "Could not remove movie"
+          }) 
+        } else {
+            res.redirect('/')
+        }
+    }
+})
+
+async function renderNewPage(res, movie, hasError = false) 
+{
+    renderFormPage(res, movie, 'new', hasError)
+}
+
+async function renderEditPage(res, movie, hasError = false) 
+{
+    renderFormPage(res, movie, 'edit', hasError)
+}
+
+async function renderFormPage(res, movie, form, hasError = false) {
+    try {
+        const directors = await Director.find({})
+        const params = {
+            directors: directors,
+            movie: movie
+        }
+        if (hasError){
+            if (form === 'edit') {
+                params.errorMessage = 'Error Updating Movie Review!'
+            } else {
+                params.errorMessage = 'Error Creating Movie Review!'
+            }
+        }
+        res.render(`movies/${form}`, params)
+        } catch{
+        res.redirect('/movies')
+        }
+}
 
 function savePoster(movie, posterEncoded){
     if (posterEncoded == null) return

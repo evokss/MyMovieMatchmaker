@@ -6,5 +6,7 @@
 <% if (movieReviewsByDirector.length > 0) { %>
 <h2>Movie Reviews by this Director</h2>
 <% movieReviewsByDirector.forEach(movie => { %>
-<img height="150" width="100" src="<%= movie.posterImagePath %>" />
+<a href="/movies/<%= movie.id %>">
+  <img height="150" width="100" src="<%= movie.posterImagePath %>" />
+</a>
 <% }) %> <% } %>

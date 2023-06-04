@@ -1,35 +1,36 @@
-<div>
-  <label>Review Title</label>
-  <input type="text" name="reviewTitle" value="<%= movie.reviewTitle %>" />
+<div class="form-row">
+  <div class="form-item">
+    <label>Review Title</label>
+    <input type="text" name="reviewTitle" value="<%= movie.reviewTitle %>" />
+  </div>
+  <div class="form-item">
+    <label>Movie Title</label>
+    <input type="text" name="movieTitle" value="<%= movie.movieTitle %>" />
+  </div>
+  <div class="form-item">
+    <label>Director</label>
+    <select name="director">
+      <% directors.forEach(director =>{ %> <% if (director.id ===
+      movie.director) {%>
+      <option
+        selected
+        label="<%= director.name %>"
+        value="<%= director.id %>"
+      ></option>
+      <% } else { %>
+      <option label="<%= director.name %>" value="<%= director.id %>"></option>
+      <% } %> <% }) %>
+    </select>
+  </div>
 </div>
 
-<div>
-  <label>Movie Title</label>
-  <input type="text" name="movieTitle" value="<%= movie.movieTitle %>" />
-</div>
-
-<div>
-  <label>Director</label>
-  <select name="director">
-    <% directors.forEach(director =>{ %> <% if (director.id === movie.director)
-    {%>
-    <option
-      selected
-      label="<%= director.name %>"
-      value="<%= director.id %>"
-    ></option>
-    <% } else { %>
-    <option label="<%= director.name %>" value="<%= director.id %>"></option>
-    <% } %> <% }) %>
-  </select>
-</div>
-
-<div>
-  <label>Poster</label>
-  <input type="file" name="poster" class="filepond" />
-</div>
-
-<div>
-  <label>Description</label>
-  <textarea name="description"><%= movie.description%></textarea>
+<div class="form-row">
+  <div class="form-item form-item-no-grow">
+    <label>Poster</label>
+    <input type="file" name="poster" class="filepond" />
+  </div>
+  <div class="form-item">
+    <label>Description</label>
+    <textarea name="description"><%= movie.description%></textarea>
+  </div>
 </div>

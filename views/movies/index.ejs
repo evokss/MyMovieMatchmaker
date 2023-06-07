@@ -1,15 +1,19 @@
 <h2 class="page-header">Search Movie Reviews</h2>
 <form action="/movies" method="GET">
-  <div>
-    <label>Movie Title</label>
-    <input
-      type="text"
-      name="movieTitle"
-      value="<%= searchOptions.movieTitle %>"
-    />
+  <div class="form-row">
+    <div class="form-item">
+      <label>Movie Title</label>
+      <input
+        type="text"
+        name="movieTitle"
+        value="<%= searchOptions.movieTitle %>"
+      />
+    </div>
   </div>
 
-  <button type="submit">Search</button>
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
 </form>
 
 <% movies.forEach(movie => { %>

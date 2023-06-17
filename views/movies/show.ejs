@@ -1,9 +1,24 @@
 <h2 class="page-header"><%= movie.movieTitle %></h2>
-<div>Review Title: <%= movie.reviewTitle %></div>
-<img width="100" height="150" src="<%= movie.posterImagePath %>" />
-<div>Director: <%= movie.director.name %></div>
-<div>Thoughts: <%= movie.description %></div>
 
-<a href="/movies/<%= movie.id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %>
-<a href="/directors/<%= movie.director.id %>">View Autor</a>
+<div class="movie-details">
+  <div>
+    <img class="poster-image" src="<%= movie.posterImagePath %>" />
+    <div class="movie-details-btn-grid">
+      <a class="btn btn-primary" href="/movies/<%= movie.id %>/edit">Edit</a>
+      <%- include('../partials/deleteForm', {url: `/movies/${movie.id}`}) %>
+      <a
+        class="btn btn-primary movie-details-director-button"
+        href="/directors/<%= movie.director.id %>"
+        >View Autor</a
+      >
+    </div>
+  </div>
+  <div class="movie-details-grid">
+    <div class="movie-details-label">Review Title:</div>
+    <div><%= movie.reviewTitle %></div>
+    <div class="movie-details-label">Director:</div>
+    <div><%= movie.director.name %></div>
+    <div class="movie-details-label">Thoughts:</div>
+    <div><%= movie.description %></div>
+  </div>
+</div>

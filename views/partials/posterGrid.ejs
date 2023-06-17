@@ -1,0 +1,13 @@
+<% posterImageClass = locals.large ? 'poster-image-large' : '' %> <%
+posterGridClass = locals.large ? 'poster-grid-large' : '' %>
+
+<div class="poster-grid <%= posterGridClass %>">
+  <% movies.forEach(movie => { %>
+  <a href="/movies/<%= movie.id %>">
+    <img
+      class="poster-image <%= posterImageClass %>"
+      src="<%= movie.posterImagePath %>"
+    />
+  </a>
+  <% }) %>
+</div>

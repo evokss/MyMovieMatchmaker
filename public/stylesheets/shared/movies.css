@@ -1,0 +1,25 @@
+:root {
+    --poster-image-width: 200px;
+    --poster-image-width-large: 250px;
+    --poster-image-aspect-ratio: 0.85; 
+}
+
+.poster-image {
+    width: var(--poster-image-width);
+    height: calc(var(--poster-image-width) / var(--poster-image-aspect-ratio));
+}
+
+.poster-image-large {
+    --poster-image-width: var(--poster-image-width-large);
+}
+
+.poster-grid {
+    display: grid;
+    justify-content: center;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fill, var(--poster-image-width));
+}
+
+.poster-grid-large {
+    grid-template-columns: repeat(auto-fill, var(--poster-image-width-large));
+}
